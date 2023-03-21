@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "Server.Translation";
+
+// The greeting service definition.
+service Translation {
+  rpc TranscribeAudio (Audio) returns (TextResponse);
+  rpc TranslateAudioToText (Audio) returns (TextResponse);
+  rpc ConvertTextToAudio (TextResponse) return (Audio);
+}
+
+message Audio {
+  bytes data = 1;
+  string fileType = 2;
+  TranslationConfig config = 3;
+}
+
+message TranslationConfig {
+  string recognizedLanguage = 1;
+  string translatedLanguage = 2;
+}
+
+message SpeechRequest {
+    string userId = 1;
+}
+
+message TextResponse {
+  string text = 1;
+  string language = 2;
+  bool recognized = 3;
+}
+
+message TranslationResponse {
+  string text = 1;
+  string translatedLanguage = 2;
+  bool translated = 3;
+}
